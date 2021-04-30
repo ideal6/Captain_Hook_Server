@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { Webhook } from './webhooks/webhook.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -37,7 +38,7 @@ import * as Joi from 'joi';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User],
+      entities: [User, Webhook],
       synchronize: true,
     }),
     UsersModule,

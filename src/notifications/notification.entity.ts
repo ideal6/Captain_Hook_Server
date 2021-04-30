@@ -1,5 +1,4 @@
 import {
-  Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
@@ -7,13 +6,9 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
-  username: string;
-  @Column()
-  password: string;
 
   @CreateDateColumn()
   createdAt: Date;
