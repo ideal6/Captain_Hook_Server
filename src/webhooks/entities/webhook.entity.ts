@@ -1,10 +1,11 @@
+import { User } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryColumn,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { WebhookField } from './webhook-field.entity';
@@ -25,6 +26,9 @@ export class Webhook {
   fields: WebhookField[];
   @OneToMany(() => WebhookHistory, (history) => history.webhook)
   histories: WebhookHistory[];
+
+  @ManyToOne(() => User, (user) => user.webhooks)
+  user: User;
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()

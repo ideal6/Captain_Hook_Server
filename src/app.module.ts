@@ -6,10 +6,8 @@ import { WebhooksModule } from './webhooks/webhooks.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { User } from './users/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { Webhook } from './webhooks/webhook.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -38,8 +36,8 @@ import { Webhook } from './webhooks/webhook.entity';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Webhook],
       synchronize: true,
+      autoLoadEntities: true,
     }),
     UsersModule,
     WebhooksModule,

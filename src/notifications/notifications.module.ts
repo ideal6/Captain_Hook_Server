@@ -5,12 +5,12 @@ import { SlackService } from './dispatchers/slack.service';
 import { DiscordService } from './dispatchers/discord.service';
 import { EmailService } from './dispatchers/email.service';
 import { TelegramService } from './dispatchers/telegram.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Notification } from './notification.entity';
 import { NotificationsController } from './notifications.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { NotificationHistory } from './notification-history.entity';
 
 @Module({
-  // imports: [TypeOrmModule.forFeature([Notification])],
+  imports: [TypeOrmModule.forFeature([Notification, NotificationHistory])],
   providers: [
     NotificationsService,
     SmsService,

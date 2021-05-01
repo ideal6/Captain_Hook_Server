@@ -1,7 +1,10 @@
+import { Webhook } from 'src/webhooks/entities/webhook.entity';
+import { Notification } from 'src/notifications/notification.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,7 +17,10 @@ export class User {
   username: string;
   @Column()
   password: string;
-
+  @OneToMany(() => Webhook, (webhook) => webhook.user)
+  webhooks: Webhook[];
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
