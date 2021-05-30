@@ -28,6 +28,7 @@ import * as Joi from 'joi';
         allowUnknown: true,
         abortEarly: true,
       },
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',

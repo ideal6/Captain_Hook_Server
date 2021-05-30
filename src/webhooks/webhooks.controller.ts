@@ -6,13 +6,17 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/common/jwt-auth.gurad';
 import { User } from 'src/common/user.decorator';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
 import { Webhook } from './entities/webhook.entity';
 import { WebhooksService } from './webhooks.service';
+
+@UseGuards(JwtAuthGuard)
 @Controller('webhooks')
 export class WebhooksController {
   constructor(private readonly webhooksService: WebhooksService) {}
