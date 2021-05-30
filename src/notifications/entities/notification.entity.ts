@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { NotificationHistory } from './notification-history.entity';
+import { NotificationMethod } from './notification-method.entity';
 
 @Entity()
 export class Notification {
@@ -18,7 +19,11 @@ export class Notification {
   condition: string;
   @OneToMany(() => NotificationHistory, (history) => history.notification)
   histories: NotificationHistory[];
-  @ManyToOne(() => User, (user) => user.notifications)
+  @OneToMany(() => NotificationMethod, (method) => method.notification)
+  methods: NotificationMethod[];
+  @Column()
+  userId: string;
+  @ManyToOne(() => User, (user) => user.notifications, { cascade: true })
   user: User;
   @CreateDateColumn()
   createdAt: Date;

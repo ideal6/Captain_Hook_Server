@@ -7,37 +7,47 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { User } from 'src/common/user.decorator';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
+import { NotificationsService } from './notifications.service';
+import { Notification } from './entities/notification.entity';
 
 @Controller('notifications')
 export class NotificationsController {
+  constructor(private readonly notificationsService: NotificationsService) {}
+
   @Get()
-  getNotifications(): Promise<Notification[]> {
-    return null;
+  findAll(@User('username') username): Promise<Notification[]> {
+    return this.notificationsService.findAll(username);
   }
 
-  @Get(':id')
-  getNotification(@Param('id') id: string): Promise<Notification> {
-    return null;
+  @Get('/:id')
+  findOne(@Param('id') id: number): Promise<Notification> {
+    return this.notificationsService.findOne(id);
   }
 
-  @Put()
-  updateNotification(
+  @Put('/:id')
+  update(
+    @Param('id') id: number,
     @Body() updateNotificationDto: UpdateNotificationDto,
   ): Promise<Notification> {
-    return null;
+    return this.notificationsService.update(id, updateNotificationDto);
   }
 
   @Delete('/:id')
-  deleteNotification(@Param('id') id: string): Promise<Notification> {
-    return null;
+  remove(@Param('id') id: string): Promise<Notification> {
+    return this.remove(id);
   }
 
   @Post()
-  createNotification(
+  create(
+    @User('username') username,
     @Body() createNotificationDto: CreateNotificationDto,
   ): Promise<Notification> {
-    return null;
+    return this.notificationsService.addNotification(
+      username,
+      createNotificationDto,
+    );
   }
 }
