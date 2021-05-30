@@ -5,18 +5,19 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-  @Column()
+  @PrimaryColumn()
   username: string;
   @Column()
   password: string;
+  @Column()
+  email: string;
   @OneToMany(() => Webhook, (webhook) => webhook.user)
   webhooks: Webhook[];
   @OneToMany(() => Notification, (notification) => notification.user)
