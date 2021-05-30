@@ -26,7 +26,8 @@ export class Webhook {
   fields: WebhookField[];
   @OneToMany(() => WebhookHistory, (history) => history.webhook)
   histories: WebhookHistory[];
-
+  @Column()
+  userId: string;
   @ManyToOne(() => User, (user) => user.webhooks)
   user: User;
   @CreateDateColumn()

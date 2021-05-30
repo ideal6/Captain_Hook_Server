@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { User } from 'src/common/user.decorator';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
@@ -20,7 +21,7 @@ export class WebhooksController {
   async uniqueId(): Promise<string> {
     while (true) {
       const uuid = uuidv4();
-      if (await this.webhooksService.fineOne(uuid)) {
+      if (await this.webhooksService.findOne(uuid)) {
         continue;
       }
       return uuid;
@@ -31,7 +32,7 @@ export class WebhooksController {
   async createWebhook(
     @Body() createWebhookDto: CreateWebhookDto,
   ): Promise<Webhook> {
-    return null;
+    return this.webhooksService.addWebhook(createWebhookDto);
   }
 
   @Put('/:webhookId')
@@ -39,29 +40,30 @@ export class WebhooksController {
     @Param('webhookId') webhookId: string,
     @Body() updateWebhookDto: UpdateWebhookDto,
   ): Promise<Webhook> {
-    return null;
+    return this.webhooksService.update(webhookId, updateWebhookDto);
   }
 
   @Get('/:webhookId')
   async getWebhook(@Param('webhookId') webhookId: string): Promise<Webhook> {
-    return null;
+    return this.webhooksService.findOne(webhookId);
   }
 
   @Delete('/:webhookId')
   async deleteWebhook(@Param('webhookId') webhookId: string): Promise<Webhook> {
-    return null;
+    return this.webhooksService.remove(webhookId);
   }
 
   @Get()
-  async getAllWebhooks(): Promise<Webhook[]> {
-    return null;
+  async getAllWebhooks(@User('username') username: string): Promise<Webhook[]> {
+    return this.webhooksService.findAll(username);
   }
 
-  @Post('/:userId/:webhookId')
+  @Post('w/:webhookId')
   async receiveWebhook(
-    @Param('userId') userId: string,
     @Param('webhookId') webhookId: string,
-  ): Promise<void> {
-    return;
+    @Body() data: any,
+  ): Promise<boolean> {
+    await this.webhooksService.addWebhookHistory(webhookId, data);
+    return true;
   }
 }
