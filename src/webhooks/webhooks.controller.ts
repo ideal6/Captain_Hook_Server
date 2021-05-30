@@ -30,9 +30,10 @@ export class WebhooksController {
 
   @Post()
   async createWebhook(
+    @User('username') username: string,
     @Body() createWebhookDto: CreateWebhookDto,
   ): Promise<Webhook> {
-    return this.webhooksService.addWebhook(createWebhookDto);
+    return this.webhooksService.addWebhook(username, createWebhookDto);
   }
 
   @Put('/:webhookId')
@@ -63,6 +64,7 @@ export class WebhooksController {
     @Param('webhookId') webhookId: string,
     @Body() data: any,
   ): Promise<boolean> {
+    //TODO: handle webhook & add history
     await this.webhooksService.addWebhookHistory(webhookId, data);
     return true;
   }

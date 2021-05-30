@@ -5,7 +5,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { WebhookField } from './webhook-field.entity';
@@ -16,7 +16,7 @@ export enum WebhookType {
 }
 @Entity()
 export class Webhook {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: string;
   @Column()
   name: string;

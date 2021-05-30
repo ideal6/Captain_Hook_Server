@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
@@ -26,7 +27,10 @@ export class WebhooksService {
     return webhook;
   }
 
-  async addWebhook(createWebhookDto: CreateWebhookDto): Promise<Webhook> {
+  async addWebhook(
+    username: string,
+    createWebhookDto: CreateWebhookDto,
+  ): Promise<Webhook> {
     const fields = await Promise.all(
       createWebhookDto.fields.map((field) =>
         this.webhookFieldsRepository.create(field),
@@ -35,6 +39,7 @@ export class WebhooksService {
     const webhook = await this.webhooksRepository.create({
       ...createWebhookDto,
       fields,
+      userId: username,
     });
     return this.webhooksRepository.save(webhook);
   }
