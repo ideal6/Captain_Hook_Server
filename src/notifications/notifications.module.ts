@@ -10,7 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotificationHistory } from './entities/notification-history.entity';
 import { Notification } from './entities/notification.entity';
 import { NotificationMethod } from './entities/notification-method.entity';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [

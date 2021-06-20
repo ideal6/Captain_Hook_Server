@@ -1,5 +1,5 @@
-import { Webhook } from 'src/webhooks/entities/webhook.entity';
-import { Notification } from 'src/notifications/entities/notification.entity';
+import { Webhook } from '../webhooks/entities/webhook.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 import {
   Column,
   CreateDateColumn,

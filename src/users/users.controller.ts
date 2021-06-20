@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { userInfo } from 'node:os';
-import { JwtAuthGuard } from 'src/common/jwt-auth.gurad';
+import { JwtAuthGuard } from '../common/jwt-auth.gurad';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';

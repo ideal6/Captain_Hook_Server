@@ -8,12 +8,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { User } from 'src/common/user.decorator';
+import { User } from '../common/user.decorator';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
 import { NotificationsService } from './notifications.service';
 import { Notification } from './entities/notification.entity';
-import { JwtAuthGuard } from 'src/common/jwt-auth.gurad';
+import { JwtAuthGuard } from '../common/jwt-auth.gurad';
 
 @UseGuards(JwtAuthGuard)
 @Controller('notifications')
