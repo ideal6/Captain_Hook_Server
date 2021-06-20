@@ -1,7 +1,7 @@
-import { NotificaitonMethodType } from '../entities/notification-method.entity';
+import { NotificationMethodType } from '../entities/notification-method.entity';
 
 export class CreateNotificationMethodDto {
-  type: NotificaitonMethodType;
+  type: NotificationMethodType;
   name: string;
   key: string;
 }
