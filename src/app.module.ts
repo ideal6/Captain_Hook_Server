@@ -24,6 +24,7 @@ import * as Joi from 'joi';
         DATABASE_NAME: Joi.string().default('postgres'),
         JWT_SECRET: Joi.string().required(),
         TELEGRAM_BOT_TOKEN: Joi.string().required(),
+        DISCORD_BOT_TOKEN: Joi.string().required(),
       }),
       validationOptions: {
         allowUnknown: true,
