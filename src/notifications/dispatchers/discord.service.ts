@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import Discord from 'discord.js';
+import * as Discord from 'discord.js';
 @Injectable()
 export class DiscordService implements IDispatcher {
   private readonly client: Discord.Client;
