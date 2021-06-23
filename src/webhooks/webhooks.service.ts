@@ -24,7 +24,7 @@ export class WebhooksService {
     return this.webhooksRepository.find({ userId: username });
   }
 
-  async findOne(id: string): Promise<Webhook> {
+  async findOne(id: number): Promise<Webhook> {
     const webhook = await this.webhooksRepository.findOne(id);
     if (!webhook) throw new NotFoundException(`Webhook "${id}" not found`);
     return webhook;
@@ -47,13 +47,13 @@ export class WebhooksService {
     return this.webhooksRepository.save(webhook);
   }
 
-  async addWebhookHistory(id: string, data: any): Promise<WebhookHistory> {
+  async addWebhookHistory(id: number, data: any): Promise<WebhookHistory> {
     //TODO: handle webhook & add history
     return null;
   }
 
   async update(
-    id: string,
+    id: number,
     updateWebhookDto: UpdateWebhookDto,
   ): Promise<Webhook> {
     await this.findOne(id);
@@ -66,6 +66,7 @@ export class WebhooksService {
       ));
 
     const webhook = await this.webhooksRepository.preload({
+      id,
       ...updateWebhookDto,
       fields,
     });
@@ -73,7 +74,7 @@ export class WebhooksService {
     return this.webhooksRepository.save(webhook);
   }
 
-  async remove(username: string, id: string): Promise<Webhook> {
+  async remove(username: string, id: number): Promise<Webhook> {
     const webhook = await this.findOne(id);
     if (webhook.userId !== username) {
       throw new BadRequestException(`cannot remove other users webhook`);

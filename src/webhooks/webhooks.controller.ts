@@ -31,21 +31,21 @@ export class WebhooksController {
 
   @Put('/:webhookId')
   async updateWebhook(
-    @Param('webhookId') webhookId: string,
+    @Param('webhookId') webhookId: number,
     @Body() updateWebhookDto: UpdateWebhookDto,
   ): Promise<Webhook> {
     return this.webhooksService.update(webhookId, updateWebhookDto);
   }
 
   @Get('/:webhookId')
-  async getWebhook(@Param('webhookId') webhookId: string): Promise<Webhook> {
+  async getWebhook(@Param('webhookId') webhookId: number): Promise<Webhook> {
     return this.webhooksService.findOne(webhookId);
   }
 
   @Delete('/:webhookId')
   async deleteWebhook(
     @User('username') username,
-    @Param('webhookId') webhookId: string,
+    @Param('webhookId') webhookId: number,
   ): Promise<Webhook> {
     return this.webhooksService.remove(username, webhookId);
   }
@@ -57,7 +57,7 @@ export class WebhooksController {
 
   @Post('w/:webhookId')
   async receiveWebhook(
-    @Param('webhookId') webhookId: string,
+    @Param('webhookId') webhookId: number,
     @Body() data: any,
   ): Promise<boolean> {
     //TODO: handle webhook & add history

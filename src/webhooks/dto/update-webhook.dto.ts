@@ -7,9 +7,6 @@ import { UpdateFieldDto } from './update-field.dto';
 export class UpdateWebhookDto extends OmitType(PartialType(CreateWebhookDto), [
   'fields',
 ] as const) {
-  @IsNotEmpty()
-  @IsNumber()
-  id: number;
   @IsArray()
   fields: (CreateFieldDto | UpdateFieldDto)[];
 }
