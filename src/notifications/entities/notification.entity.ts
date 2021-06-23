@@ -16,6 +16,8 @@ export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
+  name: string;
+  @Column()
   condition: string;
   @OneToMany(() => NotificationHistory, (history) => history.notification)
   histories: NotificationHistory[];
