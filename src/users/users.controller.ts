@@ -1,7 +1,5 @@
-import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { userInfo } from 'node:os';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../common/jwt-auth.gurad';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
