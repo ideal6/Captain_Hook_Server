@@ -39,8 +39,11 @@ export class NotificationsController {
   }
 
   @Delete('/:id')
-  remove(@Param('id') id: number): Promise<Notification> {
-    return this.notificationsService.remove(id);
+  remove(
+    @User('username') username,
+    @Param('id') id: number,
+  ): Promise<Notification> {
+    return this.notificationsService.remove(username, id);
   }
 
   @Post()

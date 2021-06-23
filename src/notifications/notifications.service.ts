@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateNotificationMethodDto } from './dto/create-notification-method.dto';
@@ -68,8 +72,11 @@ export class NotificationsService {
     return this.notificationsRepository.save(notification);
   }
 
-  async remove(id: number): Promise<Notification> {
+  async remove(username: string, id: number): Promise<Notification> {
     const webhook = await this.findOne(id);
+    if (webhook.userId !== username)
+      throw new BadRequestException(`cannot remove other users notification`);
+
     return this.notificationsRepository.remove(webhook);
   }
 }
