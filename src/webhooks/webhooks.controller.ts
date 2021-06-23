@@ -21,17 +21,6 @@ import { WebhooksService } from './webhooks.service';
 export class WebhooksController {
   constructor(private readonly webhooksService: WebhooksService) {}
 
-  @Get('/uniqueId')
-  async uniqueId(): Promise<string> {
-    while (true) {
-      const uuid = uuidv4();
-      if (await this.webhooksService.findOne(uuid)) {
-        continue;
-      }
-      return uuid;
-    }
-  }
-
   @Post()
   async createWebhook(
     @User('username') username: string,
@@ -54,8 +43,11 @@ export class WebhooksController {
   }
 
   @Delete('/:webhookId')
-  async deleteWebhook(@Param('webhookId') webhookId: string): Promise<Webhook> {
-    return this.webhooksService.remove(webhookId);
+  async deleteWebhook(
+    @User('username') username,
+    @Param('webhookId') webhookId: string,
+  ): Promise<Webhook> {
+    return this.webhooksService.remove(username, webhookId);
   }
 
   @Get()

@@ -1,6 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
@@ -70,8 +73,11 @@ export class WebhooksService {
     return this.webhooksRepository.save(webhook);
   }
 
-  async remove(id: string): Promise<Webhook> {
+  async remove(username: string, id: string): Promise<Webhook> {
     const webhook = await this.findOne(id);
+    if (webhook.userId !== username) {
+      throw new BadRequestException(`cannot remove other users webhook`);
+    }
     return this.webhooksRepository.remove(webhook);
   }
 }

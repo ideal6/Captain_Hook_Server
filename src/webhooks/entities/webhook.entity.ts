@@ -17,7 +17,7 @@ export enum WebhookType {
 @Entity()
 export class Webhook {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
   @Column()
   name: string;
   @Column({ type: 'enum', enum: WebhookType, default: WebhookType.GITHUB })
