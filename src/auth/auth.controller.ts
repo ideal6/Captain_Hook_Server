@@ -3,6 +3,7 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
+import { User } from '../users/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +16,9 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto) {
+  async signup(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<Omit<User, 'password'>> {
     const { password, ...user } = await this.authService.signup(createUserDto);
     return user;
   }
