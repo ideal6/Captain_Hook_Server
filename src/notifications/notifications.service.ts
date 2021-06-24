@@ -24,11 +24,18 @@ export class NotificationsService {
   ) {}
 
   async findAll(username: string): Promise<Notification[]> {
-    return this.notificationsRepository.find({ userId: username });
+    return this.notificationsRepository.find({
+      where: {
+        userId: username,
+      },
+      relations: ['dependentWebhooks', 'methods'],
+    });
   }
 
   async findOne(id: number): Promise<Notification> {
-    const webhook = await this.notificationsRepository.findOne(id);
+    const webhook = await this.notificationsRepository.findOne(id, {
+      relations: ['dependentWebhooks', 'methods'],
+    });
     if (!webhook) throw new NotFoundException(`webhook #${id} not found`);
     return webhook;
   }

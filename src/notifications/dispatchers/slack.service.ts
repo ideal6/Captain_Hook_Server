@@ -5,4 +5,8 @@ export class SlackService implements IDispatcher {
   dispatch() {
     throw new Error('Method not implemented.');
   }
+
+  async subscribe() {}
+
+  async unsubscribe() {}
 }

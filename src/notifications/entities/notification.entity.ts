@@ -3,6 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -10,6 +12,7 @@ import {
 } from 'typeorm';
 import { NotificationHistory } from './notification-history.entity';
 import { NotificationMethod } from './notification-method.entity';
+import { Webhook } from '../../webhooks/entities/webhook.entity';
 
 @Entity()
 export class Notification {
@@ -23,6 +26,9 @@ export class Notification {
   histories: NotificationHistory[];
   @OneToMany(() => NotificationMethod, (method) => method.notification)
   methods: NotificationMethod[];
+  @ManyToMany(() => Webhook)
+  @JoinTable()
+  dependentWebhooks: Webhook[];
   @Column()
   userId: string;
   @ManyToOne(() => User, (user) => user.notifications, { cascade: true })
