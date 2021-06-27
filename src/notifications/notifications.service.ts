@@ -65,7 +65,7 @@ export class NotificationsService {
       updateNotificationDto.methods &&
       (await Promise.all(
         updateNotificationDto.methods.map((dto) =>
-          dto instanceof CreateNotificationMethodDto
+          dto.id === undefined
             ? this.notificationMethodsRepository.create(dto)
             : this.notificationMethodsRepository.preload(dto),
         ),

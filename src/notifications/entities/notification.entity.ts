@@ -22,9 +22,13 @@ export class Notification {
   name: string;
   @Column()
   condition: string;
-  @OneToMany(() => NotificationHistory, (history) => history.notification)
+  @OneToMany(() => NotificationHistory, (history) => history.notification, {
+    cascade: true,
+  })
   histories: NotificationHistory[];
-  @OneToMany(() => NotificationMethod, (method) => method.notification)
+  @OneToMany(() => NotificationMethod, (method) => method.notification, {
+    cascade: true,
+  })
   methods: NotificationMethod[];
   @ManyToMany(() => Webhook)
   @JoinTable()

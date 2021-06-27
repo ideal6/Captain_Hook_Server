@@ -6,6 +6,5 @@ export class UpdateNotificationMethodDto extends PartialType(
   CreateNotificationMethodDto,
 ) {
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  id?: number;
 }
