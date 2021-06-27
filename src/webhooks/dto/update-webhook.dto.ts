@@ -8,5 +8,5 @@ export class UpdateWebhookDto extends OmitType(PartialType(CreateWebhookDto), [
   'fields',
 ] as const) {
   @IsArray()
-  fields: (CreateFieldDto | UpdateFieldDto)[];
+  fields: UpdateFieldDto[];
 }
