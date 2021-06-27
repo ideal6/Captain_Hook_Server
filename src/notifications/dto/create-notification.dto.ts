@@ -6,7 +6,6 @@ export class CreateNotificationDto {
   @IsNotEmpty()
   name: string;
   @IsString()
-  @IsNotEmpty()
   condition: string;
   @IsArray()
   methods: CreateNotificationMethodDto[];
