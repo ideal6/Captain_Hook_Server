@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
+import { CreateFieldDto } from './dto/create-field.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
 import { WebhookField } from './entities/webhook-field.entity';
 import { WebhookHistory } from './entities/webhook-history.entity';
@@ -21,11 +22,17 @@ export class WebhooksService {
   ) {}
 
   async findAll(username: string): Promise<Webhook[]> {
-    return this.webhooksRepository.find({ userId: username });
+    return this.webhooksRepository.find({
+      where: { userId: username },
+      relations: ['fields', 'histories'],
+    });
   }
 
   async findOne(id: number): Promise<Webhook> {
-    const webhook = await this.webhooksRepository.findOne(id);
+    const webhook = await this.webhooksRepository.findOne({
+      where: { id },
+      relations: ['fields', 'histories'],
+    });
     if (!webhook) throw new NotFoundException(`Webhook "${id}" not found`);
     return webhook;
   }
@@ -60,9 +67,13 @@ export class WebhooksService {
     const fields =
       updateWebhookDto.fields &&
       (await Promise.all(
-        updateWebhookDto.fields.map((field) =>
-          this.webhookFieldsRepository.preload(field),
-        ),
+        updateWebhookDto.fields.map((field) => {
+          if (field.id === undefined) {
+            return this.webhookFieldsRepository.create(field);
+          } else {
+            return this.webhookFieldsRepository.preload(field);
+          }
+        }),
       ));
 
     const webhook = await this.webhooksRepository.preload({
