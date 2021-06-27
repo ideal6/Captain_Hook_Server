@@ -4,9 +4,10 @@ import { CreateNotificationMethodDto } from './create-notification-method.dto';
 import { CreateNotificationDto } from './create-notification.dto';
 import { UpdateNotificationMethodDto } from './update-notification-method.dto';
 
-export class UpdateNotificationDto extends PartialType(
-  OmitType(CreateNotificationDto, ['methods'] as const),
+export class UpdateNotificationDto extends OmitType(
+  PartialType(CreateNotificationDto),
+  ['methods'] as const,
 ) {
   @IsArray()
-  methods: (CreateNotificationMethodDto | UpdateNotificationMethodDto)[];
+  methods: UpdateNotificationMethodDto[];
 }
