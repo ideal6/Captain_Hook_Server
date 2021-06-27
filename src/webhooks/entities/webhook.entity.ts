@@ -12,6 +12,11 @@ import { WebhookField } from './webhook-field.entity';
 import { WebhookHistory } from './webhook-history.entity';
 export enum WebhookType {
   GITHUB = 'github',
+  GOOGLE_CALANDER = 'google_calendar',
+  GOOGLE_DRIVE = 'google_drive',
+  SLACK = 'slack',
+  TELEGRAM = 'telegram',
+  DISCORD = 'discord',
   CUSTOM = 'custom',
 }
 @Entity()
