@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../common/jwt-auth.gurad';
 import { User } from '../common/user.decorator';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
 import { UpdateWebhookDto } from './dto/update-webhook.dto';
 import { Webhook } from './entities/webhook.entity';
