@@ -25,7 +25,7 @@ export class NotificationMethod {
   name: string;
   @Column()
   key: string;
-  @Column('simple-json')
+  @Column('simple-json', { default: [] })
   subscribers: string[];
   @Column()
   notificationId: number;
