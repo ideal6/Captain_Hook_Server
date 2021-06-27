@@ -22,9 +22,13 @@ export class Webhook {
   name: string;
   @Column({ type: 'enum', enum: WebhookType, default: WebhookType.GITHUB })
   type: WebhookType;
-  @OneToMany(() => WebhookField, (field) => field.webhook)
+  @OneToMany(() => WebhookField, (field) => field.webhook, {
+    cascade: true,
+  })
   fields: WebhookField[];
-  @OneToMany(() => WebhookHistory, (history) => history.webhook)
+  @OneToMany(() => WebhookHistory, (history) => history.webhook, {
+    cascade: true,
+  })
   histories: WebhookHistory[];
   @Column()
   userId: string;
