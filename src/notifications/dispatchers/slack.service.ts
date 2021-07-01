@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { IDispatcher } from '../../types';
 
 @Injectable()
 export class SlackService implements IDispatcher {

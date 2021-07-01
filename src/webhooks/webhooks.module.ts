@@ -10,5 +10,6 @@ import { WebhookField } from './entities/webhook-field.entity';
   imports: [TypeOrmModule.forFeature([Webhook, WebhookHistory, WebhookField])],
   providers: [WebhooksService],
   controllers: [WebhooksController],
+  exports: [TypeOrmModule],
 })
 export class WebhooksModule {}

@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +26,8 @@ import * as Joi from 'joi';
         JWT_SECRET: Joi.string().required(),
         TELEGRAM_BOT_TOKEN: Joi.string().required(),
         DISCORD_BOT_TOKEN: Joi.string().required(),
+        NODEMAILER_USER: Joi.string().required(),
+        NODEMAILER_PASS: Joi.string().required(),
       }),
       validationOptions: {
         allowUnknown: true,
@@ -41,7 +44,9 @@ import * as Joi from 'joi';
       database: process.env.DATABASE_NAME,
       synchronize: true,
       autoLoadEntities: true,
+      // logging: true,
     }),
+    EventEmitterModule.forRoot(),
     UsersModule,
     WebhooksModule,
     NotificationsModule,

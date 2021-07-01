@@ -19,6 +19,8 @@ export class WebhooksService {
     private readonly webhooksRepository: Repository<Webhook>,
     @InjectRepository(WebhookField)
     private readonly webhookFieldsRepository: Repository<WebhookField>,
+    @InjectRepository(WebhookHistory)
+    private readonly webhookHistoriesRepository: Repository<WebhookHistory>,
   ) {}
 
   async findAll(username: string): Promise<Webhook[]> {
@@ -54,9 +56,15 @@ export class WebhooksService {
     return this.webhooksRepository.save(webhook);
   }
 
-  async addWebhookHistory(id: number, data: any): Promise<WebhookHistory> {
-    //TODO: handle webhook & add history
-    return null;
+  async addWebhookHistory(
+    webhookId: number,
+    data: any,
+  ): Promise<WebhookHistory> {
+    const webhookHistory: WebhookHistory = await this.webhookHistoriesRepository.create(
+      { data },
+    );
+    webhookHistory.webhook = await this.findOne(webhookId);
+    return this.webhookHistoriesRepository.save(webhookHistory);
   }
 
   async update(

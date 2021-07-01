@@ -27,7 +27,7 @@ export class NotificationMethod {
   key: string;
   @Column('simple-json', { default: [] })
   subscribers: string[];
-  @Column()
+  @Column({ nullable: true })
   notificationId: number;
   @ManyToOne(() => Notification, (notification) => notification.methods)
   notification: Notification;

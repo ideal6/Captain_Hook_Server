@@ -11,6 +11,7 @@ import { NotificationHistory } from './entities/notification-history.entity';
 import { Notification } from './entities/notification.entity';
 import { NotificationMethod } from './entities/notification-method.entity';
 import { UsersModule } from '../users/users.module';
+import { WebhooksModule } from '../webhooks/webhooks.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UsersModule } from '../users/users.module';
       NotificationMethod,
       Notification,
     ]),
+    WebhooksModule,
   ],
   providers: [
     NotificationsService,

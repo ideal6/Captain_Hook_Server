@@ -8,6 +8,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import { EventEmitter2 } from 'eventemitter2';
 import { JwtAuthGuard } from '../common/jwt-auth.gurad';
 import { User } from '../common/user.decorator';
 import { CreateWebhookDto } from './dto/create-webhook.dto';
@@ -15,11 +16,14 @@ import { UpdateWebhookDto } from './dto/update-webhook.dto';
 import { Webhook } from './entities/webhook.entity';
 import { WebhooksService } from './webhooks.service';
 
-@UseGuards(JwtAuthGuard)
 @Controller('webhooks')
 export class WebhooksController {
-  constructor(private readonly webhooksService: WebhooksService) {}
+  constructor(
+    private readonly webhooksService: WebhooksService,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createWebhook(
     @User('username') username: string,
@@ -28,6 +32,7 @@ export class WebhooksController {
     return this.webhooksService.addWebhook(username, createWebhookDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('/:webhookId')
   async updateWebhook(
     @Param('webhookId') webhookId: number,
@@ -35,12 +40,13 @@ export class WebhooksController {
   ): Promise<Webhook> {
     return this.webhooksService.update(webhookId, updateWebhookDto);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get('/:webhookId')
   async getWebhook(@Param('webhookId') webhookId: number): Promise<Webhook> {
     return this.webhooksService.findOne(webhookId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:webhookId')
   async deleteWebhook(
     @User('username') username,
@@ -48,7 +54,7 @@ export class WebhooksController {
   ): Promise<Webhook> {
     return this.webhooksService.remove(username, webhookId);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllWebhooks(@User('username') username: string): Promise<Webhook[]> {
     return this.webhooksService.findAll(username);
@@ -61,6 +67,11 @@ export class WebhooksController {
   ): Promise<boolean> {
     //TODO: handle webhook & add history
     await this.webhooksService.addWebhookHistory(webhookId, data);
+    const webhook = await this.webhooksService.findOne(webhookId);
+    this.eventEmitter.emit('webhook_received', {
+      webhook,
+      data,
+    });
     return true;
   }
 }
